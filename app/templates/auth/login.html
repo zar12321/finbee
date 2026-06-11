@@ -1,87 +1,103 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %}
-Login - FinBee
-{% endblock %}
+<head>
 
-{% block content %}
+    <meta charset="UTF-8">
 
-<div class="container py-5">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <div class="row justify-content-center">
+    <title>Login - FinBee</title>
 
-        <div class="col-md-5">
+    <link
+        rel="stylesheet"
+        href="/static/css/auth.css"
+    >
 
-            <div class="card shadow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
 
-                <div class="card-body p-4">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-                    <h2 class="text-center mb-4">
-                        🐝 FinBee Login
-                    </h2>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-                    <form
-                        method="post"
-                        action="/auth/login"
+</head>
+
+<body>
+
+    <div class="auth-container">
+
+        <div class="auth-card">
+
+            <div class="auth-header">
+
+                <div class="logo">
+                    🐝
+                </div>
+
+                <h1>
+                    FinBee Login
+                </h1>
+
+            </div>
+
+            {% if error %}
+            <div class="error-box">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <form
+                method="POST"
+                class="auth-form"
+            >
+
+                <div class="form-group">
+
+                    <input
+                        type="text"
+                        name="login_identifier"
+                        placeholder="Username"
+                        autocomplete="username"
+                        required
                     >
 
-                        <div class="mb-3">
+                </div>
 
-                            <label class="form-label">
-                                Email / Username
-                            </label>
+                <div class="form-group">
 
-                            <input
-                                type="text"
-                                name="login_identifier"
-                                class="form-control"
-                                required
-                            >
-
-                        </div>
-
-                        <div class="mb-3">
-
-                            <label class="form-label">
-                                Password
-                            </label>
-
-                            <input
-                                type="password"
-                                name="password"
-                                class="form-control"
-                                required
-                            >
-
-                        </div>
-                        
-
-                        <button
-                            type="submit"
-                            class="btn btn-success w-100"
-                        >
-                            Login
-                        </button>
-
-                    </form>
-
-                    <hr>
-
-                    <div class="text-center">
-
-                        <a href="/auth/register">
-                            Register
-                        </a>
-
-                        |
-
-                        <a href="/auth/reset-password">
-                            Reset Password
-                        </a>
-
-                    </div>
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        autocomplete="current-password"
+                        required
+                    >
 
                 </div>
+
+                <button
+                    type="submit"
+                    class="btn-login"
+                >
+                    Masuk
+                </button>
+
+            </form>
+
+            <div class="auth-links">
+
+                <a href="/auth/register">
+                    Belum punya akun?
+                </a>
+
+                <span>•</span>
+
+                <a href="/auth/reset-password">
+                    Lupa Password?
+                </a>
 
             </div>
 
@@ -89,6 +105,6 @@ Login - FinBee
 
     </div>
 
-</div>
+</body>
 
-{% endblock %}
+</html>

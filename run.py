@@ -2,21 +2,17 @@
 
 import uvicorn
 
-from fastapi import (
-    FastAPI
-)
-
-from fastapi.staticfiles import (
-    StaticFiles
-)
-
-from fastapi.responses import (
-    RedirectResponse
-)
+from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
 
 from starlette.middleware.sessions import (
     SessionMiddleware
 )
+
+# =====================================================
+# ROUTERS
+# =====================================================
 
 from app.routers.auth import (
     router as auth_router
@@ -38,10 +34,9 @@ from app.routers.analysis import (
     router as analysis_router
 )
 
-from app.routers.ai import (
-    router as ai_router
-)
-
+# =====================================================
+# APP
+# =====================================================
 
 app = FastAPI(
     title="FinBee",
@@ -58,14 +53,12 @@ app.add_middleware(
 )
 
 # =====================================================
-# STATIC FILES
+# STATIC
 # =====================================================
 
 app.mount(
     "/static",
-    StaticFiles(
-        directory="static"
-    ),
+    StaticFiles(directory="static"),
     name="static"
 )
 
@@ -83,28 +76,37 @@ app.include_router(profile_router)
 
 app.include_router(analysis_router)
 
-app.include_router(ai_router)
-
 # =====================================================
-# ROOT
+# HOME
 # =====================================================
 
 @app.get("/")
-def root():
+def home():
 
     return RedirectResponse(
         url="/auth/login"
     )
 
 # =====================================================
-# RUN SERVER
+# HEALTH
+# =====================================================
+
+@app.get("/health")
+def health():
+
+    return {
+        "status": "ok"
+    }
+
+# =====================================================
+# RUN
 # =====================================================
 
 if __name__ == "__main__":
 
     uvicorn.run(
         "run:app",
-        host="0.0.0.0",
+        host="127.0.0.1",
         port=8000,
         reload=True
     )

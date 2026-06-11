@@ -1,168 +1,166 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
 
-{% block title %}
-Register - FinBee
-{% endblock %}
+<html lang="en">
 
-{% block content %}
+<head>
 
-<div class="container py-5">
+```
+<meta charset="UTF-8">
 
-    <div class="row justify-content-center">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-        <div class="col-md-6">
+<title>Register - FinBee</title>
 
-            <div class="card shadow">
+<link
+    rel="stylesheet"
+    href="/static/css/auth.css"
+>
+```
 
-                <div class="card-body p-4">
+</head>
 
-                    <h2 class="text-center mb-4">
-                        📝 Register Akun
-                    </h2>
+<body>
 
-                    <form
-                        method="post"
-                        action="/auth/register"
+```
+<div class="auth-container">
+
+    <div class="auth-card register-card">
+
+        <div class="auth-header">
+
+            <div class="logo">
+                🐝
+            </div>
+
+            <h1>
+                FinBee Register
+            </h1>
+
+        </div>
+
+        <form
+            method="POST"
+            action="/auth/register"
+            class="auth-form"
+        >
+
+            <div class="form-group">
+
+                <input
+                    type="text"
+                    name="nama"
+                    placeholder="Nama Lengkap"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <input
+                    type="text"
+                    name="login_identifier"
+                    placeholder="Email atau Username"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <select
+                    name="login_type"
+                >
+
+                    <option value="email">
+                        Email
+                    </option>
+
+                    <option value="username">
+                        Username
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <input
+                    type="password"
+                    name="confirm_password"
+                    placeholder="Konfirmasi Password"
+                    required
+                >
+
+            </div>
+
+            <div class="double-input">
+
+                <div class="form-group">
+
+                    <input
+                        type="number"
+                        name="umur"
+                        placeholder="Umur"
                     >
 
-                        <div class="mb-3">
+                </div>
 
-                            <label class="form-label">
-                                Nama Lengkap
-                            </label>
+                <div class="form-group">
 
-                            <input
-                                type="text"
-                                name="nama"
-                                class="form-control"
-                                required
-                            >
-
-                        </div>
-
-                        <div class="mb-3">
-
-                            <label class="form-label">
-                                Email / Username
-                            </label>
-
-                            <input
-                                type="text"
-                                name="login_identifier"
-                                class="form-control"
-                                required
-                            >
-
-                        </div>
-
-                        <div class="mb-3">
-
-                            <label class="form-label">
-                                Login Type
-                            </label>
-
-                            <select
-                                name="login_type"
-                                class="form-select"
-                            >
-                                <option value="email">
-                                    Email
-                                </option>
-
-                                <option value="username">
-                                    Username
-                                </option>
-                            </select>
-
-                        </div>
-
-                        <div class="mb-3">
-
-                            <label class="form-label">
-                                Password
-                            </label>
-
-                            <input
-                                type="password"
-                                name="password"
-                                class="form-control"
-                                required
-                            >
-
-                        </div>
-
-                        <div class="mb-3">
-
-                            <label class="form-label">
-                                Konfirmasi Password
-                            </label>
-
-                            <input
-                                type="password"
-                                name="confirm_password"
-                                class="form-control"
-                                required
-                            >
-
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-md-6">
-
-                                <div class="mb-3">
-
-                                    <label class="form-label">
-                                        Umur
-                                    </label>
-
-                                    <input
-                                        type="number"
-                                        name="umur"
-                                        class="form-control"
-                                    >
-
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-6">
-
-                                <div class="mb-3">
-
-                                    <label class="form-label">
-                                        Pekerjaan
-                                    </label>
-
-                                    <input
-                                        type="text"
-                                        name="pekerjaan"
-                                        class="form-control"
-                                    >
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <button
-                            type="submit"
-                            class="btn btn-success w-100"
-                        >
-                            Register
-                        </button>
-
-                    </form>
+                    <input
+                        type="text"
+                        name="pekerjaan"
+                        placeholder="Pekerjaan"
+                    >
 
                 </div>
 
             </div>
+
+            <button
+                type="submit"
+                class="btn-login"
+            >
+                Register
+            </button>
+
+        </form>
+
+        <div class="auth-links">
+
+            <a href="/auth/login">
+                Sudah punya akun?
+            </a>
+
+            <span>•</span>
+
+            <a href="/auth/reset-password">
+                Lupa Password?
+            </a>
 
         </div>
 
     </div>
 
 </div>
+```
 
-{% endblock %}
+</body>
+
+</html>

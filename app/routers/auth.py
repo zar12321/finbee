@@ -44,8 +44,9 @@ def login_page(
 ):
 
     return templates.TemplateResponse(
-        "auth/login.html",
-        {
+        request=request,
+        name="auth/login.html",
+        context={
             "request": request
         }
     )
@@ -95,12 +96,12 @@ def login_process(
     except Exception as e:
 
         return templates.TemplateResponse(
-            "auth/login.html",
-            {
-                "request": request,
-                "error": str(e)
+            request=request,
+            name="auth/login.html",
+            context={
+                "request": request
             }
-        )
+        )   
 
 
 # =====================================================
@@ -113,8 +114,9 @@ def register_page(
 ):
 
     return templates.TemplateResponse(
-        "auth/register.html",
-        {
+        request=request,
+        name="auth/register.html",
+        context={
             "request": request
         }
     )
@@ -158,10 +160,10 @@ def register_process(
     except Exception as e:
 
         return templates.TemplateResponse(
-            "auth/register.html",
-            {
-                "request": request,
-                "error": str(e)
+            request=request,
+            name="auth/register.html",
+            context={
+                "request": request
             }
         )
 
@@ -175,9 +177,11 @@ def reset_password_page(
     request: Request
 ):
 
+
     return templates.TemplateResponse(
-        "auth/reset_password.html",
-        {
+        request=request,
+        name="auth/reset_password.html",
+        context={
             "request": request
         }
     )
@@ -213,10 +217,10 @@ def reset_password_process(
     except Exception as e:
 
         return templates.TemplateResponse(
-            "auth/reset_password.html",
-            {
-                "request": request,
-                "error": str(e)
+            request=request,
+            name="auth/reset_password.html",
+            context={
+                "request": request
             }
         )
 
