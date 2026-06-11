@@ -1,13 +1,10 @@
 from fastapi import FastAPI
+from fastapi import Request
+
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from core.constants import APP_NAME, APP_VERSION
-
-app = FastAPI(
-    title=APP_NAME,
-    version=APP_VERSION
-)
+app = FastAPI()
 
 app.mount(
     "/static",
@@ -20,9 +17,11 @@ templates = Jinja2Templates(
 )
 
 @app.get("/")
-def root():
-    return {
-        "application": APP_NAME,
-        "version": APP_VERSION,
-        "status": "running"
-    }
+def login_page(request: Request):
+
+    return templates.TemplateResponse(
+        "auth/login.html",
+        {
+            "request": request
+        }
+    )
