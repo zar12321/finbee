@@ -13,13 +13,15 @@ display:flex;
 
 justify-content:center;
 
-align-items:center;
+place-items:center;
+
+margin: 0;
 
 background:#071633;
 
 font-family:'Poppins',sans-serif;
 
-padding:20px;
+padding:50px;
  
 
 }
@@ -46,6 +48,8 @@ CARD
 
  
 width:90%;
+
+
 
 max-width:640px;
 
