@@ -2,8 +2,8 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from app.core.constants import APP_NAME
-from app.core.constants import APP_VERSION
+from core.constants import APP_NAME
+from core.constants import APP_VERSION
 
 
 # =====================================================
