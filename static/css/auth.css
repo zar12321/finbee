@@ -67,10 +67,9 @@ box-shadow:
 
 .register-card{
 
- 
-max-width:750px;
- 
+    width:750px;
 
+    max-width:95%;
 }
 
 /* =========================
