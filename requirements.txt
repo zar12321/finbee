@@ -11,3 +11,7 @@ numpy
 scikit-learn
 requests
 google-genai
+
+
+starlette
+itsdangerous
