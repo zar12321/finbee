@@ -1,21 +1,34 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
 
-<head>
-    <title>Dashboard FinBee</title>
-</head>
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="/static/css/dashboard.css"
+>
+{% endblock %}
 
-<body>
+{% block content %}
 
-<h1>
-    Selamat Datang,
-    {{ user.nama }}
-</h1>
+{% include "partials/hero_card.html" %}
 
-<p>
-    Dashboard FinBee
-</p>
+<div class="metrics-grid">
 
-</body>
+    {% set title = "Saldo Saat Ini" %}
+    {% set value = metrics.balance %}
+    {% include "partials/metric_card.html" %}
 
-</html>
+    {% set title = "Total Pemasukan" %}
+    {% set value = metrics.total_income %}
+    {% include "partials/metric_card.html" %}
+
+    {% set title = "Total Pengeluaran" %}
+    {% set value = metrics.total_expense %}
+    {% include "partials/metric_card.html" %}
+
+    {% set title = "Total Top Up" %}
+    {% set value = metrics.total_topup %}
+    {% include "partials/metric_card.html" %}
+
+</div>
+
+{% endblock %}

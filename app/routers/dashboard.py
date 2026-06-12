@@ -6,17 +6,21 @@ from fastapi import (
 
 from sqlalchemy.orm import Session
 
-from app.database.connection import get_db
+from fastapi.templating import (
+    Jinja2Templates
+)
+
+from app.database.connection import (
+    get_db
+)
 
 from app.dependencies.current_user import (
     get_current_user
 )
 
-from fastapi.templating import (
-    Jinja2Templates)
-
-from app.services import dashboard_service
-
+from app.services import (
+    dashboard_service
+)
 
 router = APIRouter(
     prefix="/dashboard",
@@ -32,15 +36,23 @@ templates = Jinja2Templates(
 # =====================================================
 @router.get("")
 def dashboard_page(
-    request: Request, 
-    current_user = Depends(get_current_user)
+    request: Request,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
 ):
+
+    metrics = dashboard_service.get_dashboard_metrics(
+        db=db,
+        user_id=current_user["user_id"]
+    )
+
     return templates.TemplateResponse(
-        request=request, 
-        name="dashboard/dashboard.html", 
+        request=request,
+        name="dashboard/dashboard.html",
         context={
-            "request": request, 
-            "user_name": current_user["nama"]
+            "request": request,
+            "user_name": current_user["nama"],
+            "metrics": metrics
         }
     )
 
@@ -59,6 +71,7 @@ def get_dashboard_metrics(
         user_id=current_user["user_id"]
     )
 
+
 # =====================================================
 # TOP Categories
 # =====================================================
@@ -74,6 +87,7 @@ def get_top_categories(
         user_id=current_user["user_id"],
         limit=limit
     )
+
 
 # =====================================================
 # Monthly Summary
@@ -100,8 +114,7 @@ def get_total_income(
 ):
 
     return {
-        "total_income":
-        dashboard_service.get_total_income(
+        "total_income": dashboard_service.get_total_income(
             db=db,
             user_id=current_user["user_id"]
         )
@@ -118,8 +131,7 @@ def get_total_expense(
 ):
 
     return {
-        "total_expense":
-        dashboard_service.get_total_expense(
+        "total_expense": dashboard_service.get_total_expense(
             db=db,
             user_id=current_user["user_id"]
         )
@@ -127,7 +139,7 @@ def get_total_expense(
 
 
 # =====================================================
-# Top UP
+# TOPUP
 # =====================================================
 @router.get("/topup")
 def get_total_topup(
@@ -136,15 +148,15 @@ def get_total_topup(
 ):
 
     return {
-        "total_topup":
-        dashboard_service.get_total_topup(
+        "total_topup": dashboard_service.get_total_topup(
             db=db,
             user_id=current_user["user_id"]
         )
     }
 
+
 # =====================================================
-# Balance
+# BALANCE
 # =====================================================
 @router.get("/balance")
 def get_balance(
@@ -153,8 +165,7 @@ def get_balance(
 ):
 
     return {
-        "balance":
-        dashboard_service.get_current_balance(
+        "balance": dashboard_service.get_current_balance(
             db=db,
             user_id=current_user["user_id"]
         )
