@@ -168,22 +168,22 @@ def register_process(
         )
 
 
-    except ValueError as e:
+    except Exception as e:
+
+        print("ERROR REGISTER:", repr(e))
 
         return templates.TemplateResponse(
-            "auth/register.html",
-            {
+            request=request,
+            name="auth/register.html",
+            context={
                 "request": request,
-
-                # pesan error untuk box
                 "error": str(e),
 
-                # mempertahankan input user
                 "nama": nama,
                 "login_identifier": login_identifier,
-                "login_type": login_type,
                 "umur": umur,
-                "pekerjaan": pekerjaan
+                "pekerjaan": pekerjaan,
+                "login_type": login_type
             },
             status_code=400
         )

@@ -308,19 +308,22 @@ ERROR
 ========================= */
 
 .error-box{
-
- 
 margin-bottom:18px;
-
 background:#ffdcdc;
-
 color:#b91c1c;
-
 padding:12px;
-
 border-radius:12px;
- 
+}
 
+.error-box-register{
+    margin-top:15px;
+    padding:12px;
+    background:#ffe5e5;
+    color:#d32f2f;
+    border-radius:10px;
+    text-align:center;
+    font-size:14px;
+    font-weight:600;
 }
 
 /* =========================
@@ -367,3 +370,22 @@ MOBILE
  
 
 }
+
+.validation-msg {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 3px;
+            margin-bottom: 3px;
+            min-height: 18px;
+        }
+
+.error-box-register {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 10px;
+            background: #ffe5e5;
+            color: #d32f2f;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+        }

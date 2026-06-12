@@ -1,26 +1,46 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
+    <meta charset="UTF-8">
 
-<meta charset="UTF-8">
+    <meta 
+        name="viewport" 
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+    <title>FinBee Register</title>
 
-<title>Register - FinBee</title>
+    <link 
+        rel="stylesheet" 
+        href="/static/css/auth.css"
+    >
 
-<link
-    rel="stylesheet"
-    href="/static/css/auth.css"
->
+    <style>
 
+        .validation-msg {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 5px;
+            min-height: 18px;
+        }
+
+        .error-box-register {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 10px;
+            background: #ffe5e5;
+            color: #d32f2f;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+    </style>
 
 </head>
+
 
 <body>
 
@@ -28,6 +48,7 @@
 <div class="auth-container">
 
     <div class="auth-card register-card">
+
 
         <div class="auth-header">
 
@@ -40,13 +61,23 @@
             </h1>
 
         </div>
-        
 
-        <form
+
+
+        <form 
             method="POST"
             action="/auth/register"
             class="auth-form"
         >
+
+
+            <input 
+                type="hidden"
+                name="login_type"
+                value="username"
+            >
+
+
 
             <div class="form-group">
 
@@ -60,56 +91,69 @@
 
             </div>
 
+
+
+
             <div class="form-group">
 
                 <input
                     type="text"
+                    id="username"
                     name="login_identifier"
                     value="{{ login_identifier if login_identifier else '' }}"
-                    placeholder="Email atau Username"
+                    placeholder="Username"
                     required
                 >
 
-            </div>
 
-            <div class="form-group">
+                <div 
+                    id="usernameMsg"
+                    class="validation-msg"
+                ></div>
 
-                <select
-                    name="login_type"
-                >
-
-                    <option value="email">
-                        Email
-                    </option>
-
-                    <option value="username">
-                        Username
-                    </option>
-
-                </select>
 
             </div>
+
+
+
+
 
             <div class="form-group password-wrapper">
 
+
                 <input
                     type="password"
-                    id="newPassword"
+                    id="password"
                     name="password"
                     placeholder="Password"
                     required
                 >
 
+
                 <span
                     class="toggle-password"
-                    onclick="togglePassword('newPassword', this)"
+                    onclick="togglePassword('password', this)"
                 >
                     👁️
                 </span>
 
+
             </div>
 
+
+            <div 
+                id="passwordMsg"
+                class="validation-msg"
+            ></div>
+
+
+
+
+
+
+
             <div class="form-group password-wrapper">
+
 
                 <input
                     type="password"
@@ -119,16 +163,32 @@
                     required
                 >
 
-                <span 
+
+                <span
                     class="toggle-password"
                     onclick="togglePassword('confirmPassword', this)"
                 >
                     👁️
                 </span>
 
+
             </div>
 
+
+
+            <div 
+                id="confirmMsg"
+                class="validation-msg"
+            ></div>
+
+
+
+
+
+
+
             <div class="double-input">
+
 
                 <div class="form-group">
 
@@ -141,7 +201,11 @@
 
                 </div>
 
+
+
+
                 <div class="form-group">
+
 
                     <input
                         type="text"
@@ -151,144 +215,370 @@
                         placeholder="Pekerjaan"
                     >
 
+
                 </div>
 
+
             </div>
+
+
+
+
+
 
             <button
                 type="submit"
                 class="btn-login"
             >
+
                 Register
+
             </button>
 
+
+
+
+
             {% if error %}
-            <div class="error-box">
-                {{ error }}
+
+            <div class="error-box-register">
+
+                Tidak dapat melakukan registrasi.
+                Silakan periksa kembali isian Anda.
+
             </div>
+
             {% endif %}
-            
+
+
+
+
         </form>
+
+
+
+
+
 
         <div class="auth-links">
 
+
             <a href="/auth/login">
+
                 Sudah punya akun?
+
             </a>
 
-            <span>•</span>
+
+
+            <span>
+                •
+            </span>
+
+
+
 
             <a href="/auth/reset-password">
+
                 Lupa Password?
+
             </a>
 
+
+
         </div>
+
+
 
     </div>
 
 </div>
 
+
+
+
+
 <script>
 
-    function togglePassword(inputId, icon){
 
-        const input =
-            document.getElementById(inputId);
+function togglePassword(
+    id,
+    icon
+){
 
-        if(input.type === "password"){
+    const input = document.getElementById(id);
 
-            input.type = "text";
-            icon.innerHTML = "🙈";
 
-        }else{
+    if(input.type === "password"){
 
-            input.type = "password";
-            icon.innerHTML = "👁️";
+        input.type = "text";
+        icon.innerHTML = "🙈";
 
-        }
+    }else{
+
+        input.type = "password";
+        icon.innerHTML = "👁️";
+
     }
 
-    const usernameInput = document.querySelector('input[name="login_identifier"]');
-    const usernameMsg = document.createElement("div");
-    usernameMsg.style.fontSize = "14px";
-    usernameMsg.style.marginTop = "5px";
-    usernameInput.parentNode.appendChild(usernameMsg);
+}
 
-    let timeout = null;
 
-    usernameInput.addEventListener("input", function () {
 
-        clearTimeout(timeout);
 
-        timeout = setTimeout(async () => {
 
-            const username = usernameInput.value;
+// ======================
+// Username Validation
+// ======================
 
-            if (username.length < 3) {
-                usernameMsg.innerHTML = "";
-                return;
-            }
 
-            const res = await fetch(`/auth/check-username?login_identifier=${username}`);
-            const data = await res.json();
+const username = document.getElementById(
+    "username"
+);
 
-            if (data.available) {
-                usernameMsg.style.color = "green";
-                usernameMsg.innerHTML = "✓ Username dapat digunakan";
-            } else {
-                usernameMsg.style.color = "red";
-                usernameMsg.innerHTML = "✗ Username tidak dapat digunakan";
-            }
 
-        }, 400);
+const usernameMsg = document.getElementById(
+    "usernameMsg"
+);
 
-    });
 
-    const pass = document.querySelector('input[name="password"]');
-    const confirmPass = document.querySelector('input[name="confirm_password"]');
+let usernameTimer;
 
-    const msg = document.createElement("div");
-    msg.style.fontSize = "12px";
-    msg.style.marginTop = "5px";
-    confirmPass.parentNode.appendChild(msg);
 
-    function checkPassword() {
 
-        if (confirmPass.value === "") {
-            msg.innerHTML = "";
-            return;
-        }
+username.addEventListener(
+    "input",
+    function(){
 
-        if (pass.value === confirmPass.value) {
-            msg.style.color = "green";
-            msg.innerHTML = "✓ Password sesuai";
-        } else {
-            msg.style.color = "red";
-            msg.innerHTML = "✗ Password tidak sama";
-        }
-    }
+        clearTimeout(usernameTimer);
 
-    pass.addEventListener("input", checkPassword);
-    confirmPass.addEventListener("input", checkPassword);
 
-    const pekerjaanInput =
-    document.getElementById("pekerjaan");
+        usernameTimer = setTimeout(
+            async function(){
 
-    pekerjaanInput.addEventListener(
-        "input",
-        function () {
 
-            this.value =
-                this.value.replace(
-                    /[^A-Za-z\s]/g,
-                    ""
+                if(username.value.length < 3){
+
+                    usernameMsg.innerHTML = "";
+
+                    return;
+
+                }
+
+
+
+                const response = await fetch(
+                    `/auth/check-username?login_identifier=${encodeURIComponent(username.value)}`
                 );
 
-        }
-    );
+
+
+                const data = await response.json();
+
+
+
+                if(data.available){
+
+
+                    usernameMsg.style.color = "green";
+
+                    usernameMsg.innerHTML =
+                        "✓ Username dapat digunakan";
+
+
+                }else{
+
+
+                    usernameMsg.style.color = "red";
+
+                    usernameMsg.innerHTML =
+                        "✗ Username tidak dapat digunakan";
+
+
+                }
+
+
+
+            },
+            400
+        );
+
+
+    }
+);
+
+
+
+
+
+
+
+
+// ======================
+// Password Validation
+// ======================
+
+
+const password = document.getElementById(
+    "password"
+);
+
+
+const confirmPassword = document.getElementById(
+    "confirmPassword"
+);
+
+
+const passwordMsg = document.getElementById(
+    "passwordMsg"
+);
+
+
+const confirmMsg = document.getElementById(
+    "confirmMsg"
+);
+
+
+
+
+
+function checkPassword(){
+
+
+    if(password.value === ""){
+
+        passwordMsg.innerHTML = "";
+
+        return;
+
+    }
+
+
+
+    if(password.value.length < 8){
+
+
+        passwordMsg.style.color = "red";
+
+
+        passwordMsg.innerHTML =
+            "✗ Password minimal 8 karakter";
+
+
+
+    }else{
+
+
+        passwordMsg.style.color = "green";
+
+
+        passwordMsg.innerHTML =
+            "✓ Password memenuhi syarat";
+
+
+    }
+
+
+}
+
+
+
+
+
+function checkConfirmPassword(){
+
+
+    if(confirmPassword.value === ""){
+
+        confirmMsg.innerHTML = "";
+
+        return;
+
+    }
+
+
+
+    if(password.value === confirmPassword.value){
+
+
+        confirmMsg.style.color = "green";
+
+
+        confirmMsg.innerHTML =
+            "✓ Password sesuai";
+
+
+
+    }else{
+
+
+        confirmMsg.style.color = "red";
+
+
+        confirmMsg.innerHTML =
+            "✗ Password tidak sama";
+
+
+    }
+
+
+}
+
+
+
+
+
+password.addEventListener(
+    "input",
+    function(){
+
+        checkPassword();
+
+        checkConfirmPassword();
+
+    }
+);
+
+
+
+confirmPassword.addEventListener(
+    "input",
+    checkConfirmPassword
+);
+
+
+
+
+
+
+
+// ======================
+// Pekerjaan
+// ======================
+
+
+const pekerjaan = document.getElementById(
+    "pekerjaan"
+);
+
+
+
+pekerjaan.addEventListener(
+    "input",
+    function(){
+
+        this.value =
+            this.value.replace(
+                /[^A-Za-z\s]/g,
+                ""
+            );
+
+    }
+);
+
+
 
 </script>
-
 
 
 </body>
