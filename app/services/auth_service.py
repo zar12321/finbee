@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+import re
 
 from app.database.db import (
     register_user,
@@ -59,6 +60,11 @@ class AuthService:
                 confirm_password
             )
         )
+
+        if pekerjaan:
+            if not re.match(r"^[A-Za-z\s]+$", pekerjaan):
+                raise ValueError("Pekerjaan hanya boleh berisi huruf")
+                
 
         if not valid_confirm:
             raise ValueError(message)
