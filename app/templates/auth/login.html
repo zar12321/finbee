@@ -51,10 +51,15 @@
 
             {% if success %}
             <div class="success-box">
-                Akun berhasil dibuat, silakan login
+                🎉 Akun berhasil dibuat, silakan login
             </div>
             {% endif %}
 
+            { % if reset %}
+            <div class="success-box">
+                🔐 Password berhasil diganti, silakan login kembali
+            </div>
+            { % endif %}
 
             <form
                 method="POST"

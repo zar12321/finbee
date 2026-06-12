@@ -43,13 +43,18 @@ def login_page(
     request: Request
 ):
     success = request.query_params.get("success")
+    reset = request.query_params.get("reset")
+
+    success = True if success == "1" else False
+    reset = True if reset == "1" else False
 
     return templates.TemplateResponse(
         request=request,
         name="auth/login.html",
         context={
             "request": request, 
-            "success": success
+            "success": success, 
+            "reset": reset
         }
     )
 
@@ -215,7 +220,7 @@ def reset_password_process(
         )
 
         return RedirectResponse(
-            url="/auth/login",
+            url="/auth/login?reset=1",
             status_code=status.HTTP_303_SEE_OTHER
         )
 
