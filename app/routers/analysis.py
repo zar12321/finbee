@@ -39,7 +39,7 @@ def get_summary(
     transactions_df = (
         get_transactions_by_user_id(
             db=db,
-            user_id=current_user.user_id
+            user_id=current_user["user_id"]
         )
     )
 
@@ -57,7 +57,7 @@ def analyze_category(
     transactions_df = (
         get_transactions_by_user_id(
             db=db,
-            user_id=current_user.user_id
+            user_id=current_user["user_id"]
         )
     )
 
@@ -81,7 +81,7 @@ def analyze_payment_method(
     transactions_df = (
         get_transactions_by_user_id(
             db=db,
-            user_id=current_user.user_id
+            user_id=current_user["user_id"]
         )
     )
 
@@ -105,7 +105,7 @@ def get_monthly_trend(
     transactions_df = (
         get_transactions_by_user_id(
             db=db,
-            user_id=current_user.user_id
+            user_id=current_user["user_id"]
         )
     )
 
@@ -130,7 +130,7 @@ def get_top_transactions(
     transactions_df = (
         get_transactions_by_user_id(
             db=db,
-            user_id=current_user.user_id
+            user_id=current_user["user_id"]
         )
     )
 
@@ -157,7 +157,7 @@ def get_prediction(
         return (
             AnalysisService.get_prediction(
                 db=db,
-                user_id=current_user.user_id
+                user_id=current_user["user_id"]
             )
         )
 

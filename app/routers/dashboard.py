@@ -40,7 +40,7 @@ def dashboard_page(
         name="dashboard/dashboard.html", 
         context={
             "request": request, 
-            "user_name": current_user.nama
+            "user_name": current_user["nama"]
         }
     )
 
@@ -56,7 +56,7 @@ def get_dashboard_metrics(
 
     return dashboard_service.get_dashboard_metrics(
         db=db,
-        user_id=current_user.user_id
+        user_id=current_user["user_id"]
     )
 
 # =====================================================
@@ -71,7 +71,7 @@ def get_top_categories(
 
     return dashboard_service.get_top_expense_categories(
         db=db,
-        user_id=current_user.user_id,
+        user_id=current_user["user_id"],
         limit=limit
     )
 
@@ -86,7 +86,7 @@ def get_monthly_summary(
 
     return dashboard_service.get_monthly_summary(
         db=db,
-        user_id=current_user.user_id
+        user_id=current_user["user_id"]
     )
 
 
@@ -103,7 +103,7 @@ def get_total_income(
         "total_income":
         dashboard_service.get_total_income(
             db=db,
-            user_id=current_user.user_id
+            user_id=current_user["user_id"]
         )
     }
 
@@ -121,7 +121,7 @@ def get_total_expense(
         "total_expense":
         dashboard_service.get_total_expense(
             db=db,
-            user_id=current_user.user_id
+            user_id=current_user["user_id"]
         )
     }
 
@@ -139,7 +139,7 @@ def get_total_topup(
         "total_topup":
         dashboard_service.get_total_topup(
             db=db,
-            user_id=current_user.user_id
+            user_id=current_user["user_id"]
         )
     }
 
@@ -156,6 +156,6 @@ def get_balance(
         "balance":
         dashboard_service.get_current_balance(
             db=db,
-            user_id=current_user.user_id
+            user_id=current_user["user_id"]
         )
     }

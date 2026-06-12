@@ -59,7 +59,7 @@ def get_transactions(
     transactions = (
         TransactionService.get_transactions(
             db=db,
-            user_id=current_user.user_id
+            user_id=current_user["user_id"]
         )
     )
 
@@ -104,7 +104,7 @@ def create_transaction(
 
     TransactionService.create_transaction(
         db=db,
-        user_id=current_user.user_id,
+        user_id=current_user["user_id"],
         category_id=request.category_id,
         tanggal_transaksi=request.tanggal_transaksi,
         transaction_type=request.transaction_type,
@@ -139,7 +139,7 @@ def update_transaction_data(
     TransactionService.edit_transaction(
         db=db,
         transaction_id=transaction_id,
-        user_id=current_user.user_id,
+        user_id=current_user["user_id"],
         category_id=request.category_id,
         tanggal_transaksi=request.tanggal_transaksi,
         transaction_type=request.transaction_type,
@@ -173,7 +173,7 @@ def delete_transaction_data(
     TransactionService.remove_transaction(
         db=db,
         transaction_id=transaction_id,
-        user_id=current_user.user_id
+        user_id=current_user["user_id"]
     )
 
     return TransactionActionResponse(
@@ -233,7 +233,7 @@ async def import_transactions(
 
         TransactionService.import_transactions(
             db=db,
-            user_id=current_user.user_id,
+            user_id=current_user["user_id"],
             imported_df=cleaned_df
         )
 

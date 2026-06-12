@@ -38,7 +38,7 @@ def get_profile(
 
     return ProfileService.get_profile(
         db=db,
-        user_id=current_user.user_id
+        user_id=current_user["user_id"]
     )
 
 
@@ -54,7 +54,7 @@ def get_financial_summary(
 
     return ProfileService.get_financial_summary(
         db=db,
-        user_id=current_user.user_id
+        user_id=current_user["user_id"]
     )
 
 
@@ -72,7 +72,7 @@ def get_monthly_plan(
 
     return ProfileService.get_monthly_plan(
         db=db,
-        user_id=current_user.user_id,
+        user_id=current_user["user_id"],
         bulan=bulan,
         tahun=tahun
     )
@@ -94,7 +94,7 @@ def save_monthly_target(
 
     ProfileService.save_monthly_target(
         db=db,
-        user_id=current_user.user_id,
+        user_id=current_user["user_id"],
         pemasukan_bulanan=pemasukan_bulanan,
         target_bulanan=target_bulanan,
         bulan=bulan,
