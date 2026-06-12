@@ -324,9 +324,21 @@ border-radius:12px;
 }
 
 /* =========================
-SUCCESS REGISTER NEW AKUN
+SUCCESS REGISTER NEW AKUN  
 ========================= */
 .success-box{
+    margin-bottom: 18px;
+    background: #dcfce7;
+    color: #166534;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #86efac;
+}
+
+/* =========================
+SUCCESS RESET PASSWORD 
+========================= */
+.reset-box{
     margin-bottom: 18px;
     background: #dcfce7;
     color: #166534;
