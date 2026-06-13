@@ -10,7 +10,8 @@ from app.database.db import (
     update_transaction,
     delete_transaction, 
     get_filter_options, 
-    filter_transactions
+    filter_transactions, 
+    get_transaction_by_id
 )
 
 from utils.validation import (
@@ -23,6 +24,17 @@ from core.constants import (
 
 
 class TransactionService:
+    @staticmethod
+    def get_transaction_by_id(
+        db: Session,
+        transaction_id: int,
+        user_id: int
+    ):
+        return get_transaction_by_id(
+            db=db,
+            transaction_id=transaction_id,
+            user_id=user_id
+        )
 
     @staticmethod
     def get_transactions(
@@ -127,14 +139,34 @@ class TransactionService:
         raw_category: str | None = None
     ):
 
-        if transaction_type not in SUPPORTED_TRANSACTION_TYPES:
+        # ambil transaction lama
+        current = get_transaction_by_id(
+            db=db,
+            transaction_id=transaction_id,
+            user_id=user_id
+        )
+
+        if not current:
             raise ValueError(
-                "Jenis transaksi tidak valid."
+                "Transaksi tidak ditemukan."
             )
 
-        valid_amount, message = validate_amount(
-            amount
-        )
+        # fallback jika frontend kirim kosong
+        if not transaction_type:
+            transaction_type = current["transaction_type"]
+
+        if not raw_category:
+            raw_category = current["raw_category"]
+
+        print("FINAL TYPE =", repr(transaction_type))
+        print("FINAL RAW  =", repr(raw_category))
+
+        if transaction_type not in SUPPORTED_TRANSACTION_TYPES:
+            raise ValueError(
+                f"Jenis transaksi tidak valid: {repr(transaction_type)}"
+            )
+
+        valid_amount, message = validate_amount(amount)
 
         if not valid_amount:
             raise ValueError(message)

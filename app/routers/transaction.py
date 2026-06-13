@@ -181,11 +181,12 @@ def update_transaction_data(
         raw_category=request.raw_category
     )
 
+    print("===== UPDATE REQUEST =====")
+    print(request.model_dump())
     return TransactionActionResponse(
         success=True,
         message="Transaksi berhasil diperbarui."
     )
-
 
 # =====================================================
 # DELETE TRANSACTION
@@ -438,3 +439,25 @@ def filter_transactions(
     return transactions.to_dict(
         orient="records"
     )
+
+# =====================================================
+# EDIT TRANSAKSI
+# =====================================================
+@router.get(
+    "/{transaction_id}"
+)
+def get_transaction_by_id(
+    transaction_id: int,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
+
+    transaction = (
+        TransactionService.get_transaction_by_id(
+            db=db,
+            transaction_id=transaction_id,
+            user_id=current_user["user_id"]
+        )
+    )
+
+    return transaction

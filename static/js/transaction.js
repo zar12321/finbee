@@ -441,6 +441,35 @@ document.addEventListener(
 
             const transaction =
                 await response.json();
+            
+            const optionResponse =
+                await fetch(
+                    "/transactions/filter-options"
+                );
+
+            const optionData =
+                await optionResponse.json();
+
+            const subcategorySelect =
+                document.getElementById(
+                    "edit-subkategori"
+                );
+
+            subcategorySelect.innerHTML = "";
+
+            optionData.subcategories.forEach(
+                sub => {
+
+                    subcategorySelect.innerHTML += `
+                        <option
+                            value="${sub.category_id}"
+                        >
+                            ${sub.category_name}
+                        </option>
+                    `;
+
+                }
+            );
 
             document.getElementById(
                 "edit-transaction-id"
@@ -455,12 +484,23 @@ document.addEventListener(
             document.getElementById(
                 "edit-kategori"
             ).value =
-                transaction.raw_category;
+                transaction.transaction_type;
 
-            document.getElementById(
-                "edit-subkategori"
-            ).value =
-                transaction.category_name;
+            const selectedSub =
+                optionData.subcategories.find(
+                    s =>
+                        s.category_name ===
+                        transaction.category_name
+                );
+
+            if (selectedSub) {
+
+                document.getElementById(
+                    "edit-subkategori"
+                ).value =
+                    selectedSub.category_id;
+
+            }
 
             document.getElementById(
                 "edit-tujuan"
@@ -658,6 +698,109 @@ document.addEventListener(
                 resetFilters
             );
         
+        document
+            .getElementById(
+                "edit-transaction-form"
+            )
+            ?.addEventListener(
+                "submit",
+                async (e) => {
+
+                    e.preventDefault();
+
+                    const transactionId =
+                        document.getElementById(
+                            "edit-transaction-id"
+                        ).value;
+
+                    const kategori =
+                        document.getElementById(
+                            "edit-kategori"
+                        ).value;
+
+                    const payload = {
+
+                        tanggal_transaksi:
+                            document.getElementById(
+                                "edit-tanggal"
+                            ).value,
+
+                        transaction_type:
+                            kategori,
+
+                        raw_category:
+                            kategori,
+
+                        category_id:
+                            parseInt(
+                                document.getElementById(
+                                    "edit-subkategori"
+                                ).value
+                            ),
+
+                        tujuan_transaksi:
+                            document.getElementById(
+                                "edit-tujuan"
+                            ).value,
+
+                        payment_method:
+                            document.getElementById(
+                                "edit-metode"
+                            ).value,
+
+                        amount:
+                            parseFloat(
+                                document.getElementById(
+                                    "edit-nominal"
+                                ).value
+                            ),
+
+                        keterangan:
+                            document.getElementById(
+                                "edit-keterangan"
+                            ).value
+                    };
+
+                    console.log(
+                        "EDIT PAYLOAD",
+                        payload
+                    );
+                    const response =
+                        await fetch(
+                            `/transactions/${transactionId}`,
+                            {
+                                method: "PUT",
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+                                body: JSON.stringify(
+                                    payload
+                                )
+                            }
+                        );
+
+                    const result = await response.text();
+
+                    console.log("STATUS:", response.status);
+                    console.log("RESULT:", result);
+
+                    if (response.ok) {
+
+                        document
+                            .getElementById("edit-modal")
+                            .classList.remove("show");
+
+                        loadTransactions();
+
+                    } else {
+
+                        alert(result);
+
+                    }
+
+                }
+            );
 
     }   
 );

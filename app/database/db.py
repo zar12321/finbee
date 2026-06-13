@@ -984,3 +984,41 @@ def filter_transactions(
         )
 
     return df
+
+# =========================================
+# GET TRANSACTION BY ID
+# =========================================
+def get_transaction_by_id(
+    db: Session,
+    transaction_id: int,
+    user_id: int
+):
+
+    query = """
+    SELECT
+        t.transaction_id,
+        t.tanggal_transaksi,
+        t.raw_category,
+        c.category_name,
+        t.tujuan_transaksi,
+        t.payment_method,
+        t.transaction_type,
+        t.amount,
+        t.keterangan
+    FROM transactions t
+    LEFT JOIN categories c
+        ON t.category_id = c.category_id
+    WHERE
+        t.transaction_id = :transaction_id
+        AND t.user_id = :user_id
+    """
+
+    result = db.execute(
+        text(query),
+        {
+            "transaction_id": transaction_id,
+            "user_id": user_id
+        }
+    ).mappings().first()
+
+    return dict(result) if result else {}
