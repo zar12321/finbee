@@ -429,7 +429,216 @@ document.addEventListener(
         // FILTER TRANSAKSI
         // =====================
         loadTransactions();
+
+        async function openEditModal(
+            transactionId
+        ) {
+
+            const response =
+                await fetch(
+                    `/transactions/${transactionId}`
+                );
+
+            const transaction =
+                await response.json();
+
+            document.getElementById(
+                "edit-transaction-id"
+            ).value =
+                transaction.transaction_id;
+
+            document.getElementById(
+                "edit-tanggal"
+            ).value =
+                transaction.tanggal_transaksi;
+
+            document.getElementById(
+                "edit-kategori"
+            ).value =
+                transaction.raw_category;
+
+            document.getElementById(
+                "edit-subkategori"
+            ).value =
+                transaction.category_name;
+
+            document.getElementById(
+                "edit-tujuan"
+            ).value =
+                transaction.tujuan_transaksi;
+
+            document.getElementById(
+                "edit-metode"
+            ).value =
+                transaction.payment_method;
+
+            document.getElementById(
+                "edit-nominal"
+            ).value =
+                transaction.amount;
+
+            document.getElementById(
+                "edit-keterangan"
+            ).value =
+                transaction.keterangan || "";
+
+            document
+                .getElementById(
+                    "edit-modal"
+                )
+                .classList.add(
+                    "show"
+                );
+        };
+
+        document
+            .getElementById(
+                "close-edit-modal"
+            )
+            ?.addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .getElementById(
+                            "edit-modal"
+                        )
+                        .classList.remove(
+                            "show"
+                        );
+
+                }
+            );
+
+        document
+            .getElementById(
+                "cancel-edit-btn"
+            )
+            ?.addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .getElementById(
+                            "edit-modal"
+                        )
+                        .classList.remove(
+                            "show"
+                        );
+
+                }
+            );
+
+        document
+            .getElementById(
+                "confirm-delete-btn"
+            )
+            ?.addEventListener(
+                "click",
+                async () => {
+
+                    const transactionId =
+                        document.getElementById(
+                            "delete-transaction-id"
+                        ).value;
+
+                    await fetch(
+                        `/transactions/${transactionId}`,
+                        {
+                            method: "DELETE"
+                        }
+                    );
+
+                    document
+                        .getElementById(
+                            "delete-modal"
+                        )
+                        .classList.remove(
+                            "show"
+                        );
+
+                    loadTransactions();
+
+                }
+            );
+
+        document
+            .getElementById(
+                "cancel-delete-btn"
+            )
+            ?.addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .getElementById(
+                            "delete-modal"
+                        )
+                        .classList.remove(
+                            "show"
+                        );
+
+                }
+            );
+
+
         loadFilterOptions();
+
+        document.addEventListener(
+            "click",
+            async (e) => {
+
+                // ==================
+                // EDIT
+                // ==================
+
+                const editBtn =
+                    e.target.closest(
+                        ".edit-btn"
+                    );
+
+                if (editBtn) {
+
+                    const transactionId =
+                        editBtn.dataset.id;
+
+                    openEditModal(
+                        transactionId
+                    );
+
+                    return;
+                }
+
+                // ==================
+                // DELETE
+                // ==================
+
+                const deleteBtn =
+                    e.target.closest(
+                        ".delete-btn"
+                    );
+
+                if (deleteBtn) {
+
+                    const transactionId =
+                        deleteBtn.dataset.id;
+
+                    document.getElementById(
+                        "delete-transaction-id"
+                    ).value =
+                        transactionId;
+
+                    document
+                        .getElementById(
+                            "delete-modal"
+                        )
+                        .classList.add(
+                            "show"
+                        );
+                }
+
+            }
+        );
 
         document
             .getElementById(
@@ -448,6 +657,7 @@ document.addEventListener(
                 "click",
                 resetFilters
             );
+        
 
     }   
 );

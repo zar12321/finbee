@@ -498,6 +498,154 @@
 
 </div>
 
+<div id="edit-modal" class="custom-modal">
+
+    <div class="custom-modal-content">
+
+        <div class="modal-header">
+            <h2>Edit Transaksi</h2>
+
+            <button
+                id="close-edit-modal"
+                class="modal-close"
+            >
+                ✕
+            </button>
+        </div>
+
+        <form id="edit-transaction-form">
+
+            <input
+                type="hidden"
+                id="edit-transaction-id"
+            >
+
+            <div class="form-grid">
+
+                <div>
+                    <label>Tanggal</label>
+                    <input
+                        type="date"
+                        id="edit-tanggal"
+                    >
+                </div>
+
+                <div>
+                    <label>Kategori</label>
+                    <input
+                        type="text"
+                        id="edit-kategori"
+                    >
+                </div>
+
+                <div>
+                    <label>Subkategori</label>
+                    <input
+                        type="text"
+                        id="edit-subkategori"
+                    >
+                </div>
+
+                <div>
+                    <label>Tujuan</label>
+                    <input
+                        type="text"
+                        id="edit-tujuan"
+                    >
+                </div>
+
+                <div>
+                    <label>Metode</label>
+                    <input
+                        type="text"
+                        id="edit-metode"
+                    >
+                </div>
+
+                <div>
+                    <label>Nominal</label>
+                    <input
+                        type="number"
+                        id="edit-nominal"
+                    >
+                </div>
+
+                <div style="grid-column:1/-1;">
+                    <label>Keterangan</label>
+
+                    <textarea
+                        id="edit-keterangan"
+                    ></textarea>
+                </div>
+
+            </div>
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="btn-secondary"
+                    id="cancel-edit-btn"
+                >
+                    Batal
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn-primary"
+                >
+                    Simpan
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<div id="delete-modal" class="custom-modal">
+
+    <div
+        class="custom-modal-content"
+        style="max-width:450px;"
+    >
+
+        <h2>Yakin Mau Hapus?</h2>
+
+        <p>
+            Transaksi yang dihapus tidak dapat
+            dikembalikan.
+        </p>
+
+        <input
+            type="hidden"
+            id="delete-transaction-id"
+        >
+
+        <div class="modal-actions">
+
+            <button
+                id="cancel-delete-btn"
+                class="btn-secondary"
+            >
+                Batal
+            </button>
+
+            <button
+                id="confirm-delete-btn"
+                class="btn-danger"
+            >
+                Ya, Hapus
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 {% endblock %}
 

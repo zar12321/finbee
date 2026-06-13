@@ -779,3 +779,149 @@
 .delete-btn:hover{
     background:#fef2f2;
 }
+
+.custom-modal {
+
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0,0,0,0.45);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+
+    z-index: 9999;
+}
+
+.custom-modal.show {
+
+    opacity: 1;
+    visibility: visible;
+
+}
+
+.custom-modal-content {
+
+    width: 100%;
+    max-width: 700px;
+
+    background: white;
+
+    border-radius: 24px;
+
+    padding: 24px;
+
+    transform: translateY(20px);
+
+    opacity: 0;
+
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
+
+}
+
+.custom-modal.show .custom-modal-content {
+
+    transform: translateY(-3px);
+
+    opacity: 1;
+
+    box-shadow:
+        0 12px 32px rgba(
+            16,
+            42,
+            114,
+            0.12
+        );
+
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.modal-close {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    font-size: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            2,
+            1fr
+        );
+
+    gap: 16px;
+}
+
+.form-grid input,
+.form-grid textarea {
+
+    width: 100%;
+
+    padding: 10px;
+
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+.btn-secondary {
+    background: #e5e7eb;
+    border: none;
+
+    padding: 10px 18px;
+
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+
+    border: none;
+
+    padding: 10px 18px;
+
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn-danger {
+    background: #dc2626;
+    color: white;
+
+    border: none;
+
+    padding: 10px 18px;
+
+    border-radius: 10px;
+    cursor: pointer;
+}
