@@ -37,131 +37,171 @@
 
 
     <!-- ========================= -->
-    <!-- TOP SECTION -->
+    <!-- Manual Input -->
     <!-- ========================= -->
 
-    <div class="transaction-top">
+    <div class="card">
 
-        <!-- Manual Input -->
+        <h3>
+            Input Transaksi Manual
+        </h3>
 
-        <div class="card">
+        <form
+            id="transaction-form"
+            class="transaction-form"
+        >
 
-            <h3>
-                Input Transaksi Manual
-            </h3>
+            <!-- TANGGAL -->
 
-            <form
-                id="transaction-form"
-                class="transaction-form"
+            <div class="form-group">
+
+                <label>
+                    Tanggal Transaksi
+                </label>
+
+                <input
+                    type="date"
+                    name="tanggal_transaksi"
+                >
+
+            </div>
+
+            <!-- KATEGORI -->
+
+            <div class="form-group">
+
+                <label>
+                    Kategori
+                </label>
+
+                <select
+                    id="raw-category"
+                    name="transaction_type"
+                >
+
+                    <option value="">
+                        Pilih Kategori
+                    </option>
+
+                    <option value="expense">
+                        Pengeluaran
+                    </option>
+
+                    <option value="income">
+                        Pemasukan
+                    </option>
+
+                    <option value="topup">
+                        Topup
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- SUBKATEGORI -->
+
+            <div class="form-group">
+
+                <label>
+                    Subkategori
+                </label>
+
+                <select
+                    id="subcategory"
+                    name="category_id"
+                >
+
+                    <option value="">
+                        Pilih Subkategori
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- TUJUAN -->
+
+            <div class="form-group">
+
+                <label>
+                    Tujuan Transaksi
+                </label>
+
+                <input
+                    type="text"
+                    name="tujuan_transaksi"
+                    placeholder="Contoh: Makan Siang"
+                >
+
+            </div>
+
+            <!-- METODE PEMBAYARAN -->
+
+            <div class="form-group">
+
+                <label>
+                    Metode Pembayaran
+                </label>
+
+                <select
+                    id="payment-method"
+                    name="payment_method"
+                >
+
+                    <option value="">
+                        Pilih Metode Pembayaran
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- NOMINAL -->
+
+            <div class="form-group">
+
+                <label>
+                    Nominal
+                </label>
+
+                <input
+                    type="number"
+                    name="amount"
+                    placeholder="0"
+                >
+
+            </div>
+
+            <!-- KETERANGAN -->
+
+            <div
+                class="form-group full-width"
             >
 
-                <div class="form-group">
+                <label>
+                    Keterangan
+                </label>
 
-                    <label>
-                        Tanggal Transaksi
-                    </label>
+                <textarea
+                    name="keterangan"
+                    rows="3"
+                ></textarea>
 
-                    <input
-                        type="date"
-                        name="tanggal_transaksi"
-                    >
+            </div>
 
-                </div>
+            <!-- BUTTON -->
 
-                <div class="form-group">
+            <button
+                type="submit"
+                class="primary-btn"
+            >
+                Simpan Transaksi
+            </button>
 
-                    <label>
-                        Kategori
-                    </label>
+        </form>
 
-                    <select
-                        id="raw-category"
-                    >
-                        <option value="">
-                            Pilih Kategori
-                        </option>
-
-                        <option value="expense">
-                            Pengeluaran
-                        </option>
-
-                        <option value="income">
-                            Pemasukan
-                        </option>
-
-                        <option value="topup">
-                            Topup
-                        </option>
-
-                    </select>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
-                        Tujuan Transaksi
-                    </label>
-
-                    <input
-                        type="text"
-                        name="tujuan_transaksi"
-                        placeholder="Contoh: Makan Siang"
-                    >
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
-                        Metode Pembayaran
-                    </label>
-
-                    <input
-                        type="text"
-                        name="payment_method"
-                        placeholder="Cash / E-Wallet / Transfer"
-                    >
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
-                        Nominal
-                    </label>
-
-                    <input
-                        type="number"
-                        name="amount"
-                        placeholder="0"
-                    >
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
-                        Keterangan
-                    </label>
-
-                    <textarea
-                        name="keterangan"
-                        rows="3"
-                    ></textarea>
-
-                </div>
-
-                <button
-                    type="submit"
-                    class="primary-btn"
-                >
-                    Simpan Transaksi
-                </button>
-
-            </form>
-
-        </div>
+    </div>
 
 
         <!-- Import File -->
@@ -555,10 +595,10 @@
 
                 <div>
                     <label>Metode</label>
-                    <input
-                        type="text"
+                    <select
                         id="edit-metode"
-                    >
+                    > 
+                    </select>
                 </div>
 
                 <div>

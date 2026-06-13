@@ -153,10 +153,10 @@ class TransactionService:
 
         # fallback jika frontend kirim kosong
         if not transaction_type:
-            transaction_type = current["transaction_type"]
+            transaction_type = current.get("transaction_type")
 
         if not raw_category:
-            raw_category = current["raw_category"]
+            raw_category = current.get("raw_category")
 
         print("FINAL TYPE =", repr(transaction_type))
         print("FINAL RAW  =", repr(raw_category))

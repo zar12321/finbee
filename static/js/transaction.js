@@ -450,6 +450,28 @@ document.addEventListener(
             const optionData =
                 await optionResponse.json();
 
+            const editPaymentSelect =
+                document.getElementById(
+                    "edit-metode"
+                );
+
+            editPaymentSelect.innerHTML = "";
+
+            optionData.payment_methods.forEach(
+                method => {
+
+                    editPaymentSelect.innerHTML += `
+                        <option value="${method}">
+                            ${method}
+                        </option>
+                    `;
+
+                }
+            );
+
+            editPaymentSelect.value =
+                transaction.payment_method;
+
             const subcategorySelect =
                 document.getElementById(
                     "edit-subkategori"
@@ -801,11 +823,129 @@ document.addEventListener(
 
                 }
             );
+            
+        document
+            .getElementById("transaction-form")
+            ?.addEventListener(
+                "submit",
+                async (e) => {
+
+                    e.preventDefault();
+
+                    const kategori =
+                        document.getElementById(
+                            "raw-category"
+                        ).value;
+
+                    const payload = {
+
+                        tanggal_transaksi:
+                            document.querySelector(
+                                '[name="tanggal_transaksi"]'
+                            ).value,
+
+                        transaction_type:
+                            kategori,
+
+                        raw_category:
+                            kategori,
+
+                        category_id:
+                            parseInt(
+                                document.getElementById(
+                                    "subcategory"
+                                ).value
+                            ),
+
+                        tujuan_transaksi:
+                            document.querySelector(
+                                '[name="tujuan_transaksi"]'
+                            ).value,
+
+                        payment_method:
+                            document.getElementById(
+                                "payment-method"
+                            ).value,
+
+                        amount:
+                            parseFloat(
+                                document.querySelector(
+                                    '[name="amount"]'
+                                ).value
+                            ),
+
+                        keterangan:
+                            document.querySelector(
+                                '[name="keterangan"]'
+                            ).value
+                    };
+
+                    console.log(
+                        "CREATE PAYLOAD",
+                        payload
+                    );
+
+                    const response =
+                        await fetch(
+                            "/transactions",
+                            {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+                                body: JSON.stringify(
+                                    payload
+                                )
+                            }
+                        );
+
+                    const result =
+                        await response.json();
+
+                    console.log(result);
+
+                    if (response.ok) {
+
+                        // reset form
+                        document
+                            .getElementById(
+                                "transaction-form"
+                            )
+                            .reset();
+
+                        // reload tabel
+                        await loadTransactions();
+
+                        alert(
+                            "Transaksi berhasil ditambahkan"
+                        );
+
+                    } else {
+
+                        alert(
+                            result.detail ||
+                            "Gagal menyimpan transaksi"
+                        );
+
+                    }
+
+                }
+            );
 
     }   
 );
 
 async function loadFilterOptions() {
+    const manualPaymentSelect =
+        document.getElementById(
+            "payment-method"
+        );
+
+    const manualSubcategorySelect =
+        document.getElementById(
+            "subcategory"
+        );
 
     const response =
         await fetch(
@@ -843,11 +983,24 @@ async function loadFilterOptions() {
     data.payment_methods.forEach(
         method => {
 
+            // FILTER
             paymentSelect.innerHTML += `
                 <option value="${method}">
                     ${method}
                 </option>
             `;
+
+            // MANUAL INPUT
+            if (manualPaymentSelect) {
+
+                manualPaymentSelect.innerHTML += `
+                    <option value="${method}">
+                        ${method}
+                    </option>
+                `;
+
+            }
+
         }
     );
 
@@ -876,11 +1029,24 @@ async function loadFilterOptions() {
     data.subcategories.forEach(
         category => {
 
+            // FILTER
             subcategorySelect.innerHTML += `
                 <option value="${category.category_id}">
                     ${category.category_name}
                 </option>
             `;
+
+            // MANUAL INPUT
+            if (manualSubcategorySelect) {
+
+                manualSubcategorySelect.innerHTML += `
+                    <option value="${category.category_id}">
+                        ${category.category_name}
+                    </option>
+                `;
+
+            }
+
         }
     );
 
