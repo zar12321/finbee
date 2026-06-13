@@ -604,22 +604,38 @@ document.addEventListener(
                             "delete-transaction-id"
                         ).value;
 
-                    await fetch(
-                        `/transactions/${transactionId}`,
-                        {
-                            method: "DELETE"
-                        }
-                    );
-
-                    document
-                        .getElementById(
-                            "delete-modal"
-                        )
-                        .classList.remove(
-                            "show"
+                    const response =
+                        await fetch(
+                            `/transactions/${transactionId}`,
+                            {
+                                method: "DELETE"
+                            }
                         );
 
-                    loadTransactions();
+                    if (response.ok) {
+
+                        document
+                            .getElementById(
+                                "delete-modal"
+                            )
+                            .classList.remove(
+                                "show"
+                            );
+
+                        loadTransactions();
+
+                        showToast(
+                            "Transaksi berhasil dihapus"
+                        );
+
+                    } else {
+
+                        showToast(
+                            "Gagal menghapus transaksi",
+                            true
+                        );
+
+                    }
 
                 }
             );
@@ -815,15 +831,25 @@ document.addEventListener(
 
                         loadTransactions();
 
-                    } else {
+                        showToast(
+                            "Transaksi berhasil diperbarui"
+                        );
 
-                        alert(result);
+                    }
+
+                    else {
+
+                        showToast(
+                            result || 
+                            "Gagal mengupdate transaksi", 
+                            true
+                        )
 
                     }
 
                 }
             );
-            
+
         document
             .getElementById("transaction-form")
             ?.addEventListener(
@@ -831,18 +857,93 @@ document.addEventListener(
                 async (e) => {
 
                     e.preventDefault();
+                    const tanggal =
+                        document.querySelector(
+                            '[name="tanggal_transaksi"]'
+                        ).value;
 
                     const kategori =
                         document.getElementById(
                             "raw-category"
                         ).value;
 
-                    const payload = {
+                    const subkategori =
+                        document.getElementById(
+                            "subcategory"
+                        ).value;
 
+                    const tujuan =
+                        document.querySelector(
+                            '[name="tujuan_transaksi"]'
+                        ).value.trim();
+
+                    const metode =
+                        document.getElementById(
+                            "payment-method"
+                        ).value;
+
+                    const nominal =
+                        document.querySelector(
+                            '[name="amount"]'
+                        ).value;
+
+                    // =====================
+                    // VALIDASI FIELD KOSONG
+                    // =====================
+
+                    const missingFields = [];
+
+                    if (!tanggal)
+                        missingFields.push("Tanggal Transaksi");
+
+                    if (!kategori)
+                        missingFields.push("Kategori");
+
+                    if (!subkategori)
+                        missingFields.push("Subkategori");
+
+                    if (!tujuan)
+                        missingFields.push("Tujuan Transaksi");
+
+                    if (!metode)
+                        missingFields.push("Metode Pembayaran");
+
+                    if (!nominal)
+                        missingFields.push("Nominal");
+
+                    // =====================
+                    // KONDISI 1
+                    // HANYA 1 FIELD KOSONG
+                    // =====================
+
+                    if (missingFields.length === 1) {
+
+                        showToast(
+                            `Silakan isi kolom ${missingFields[0]}`,
+                            true
+                        );
+
+                        return;
+                    }
+
+                    // =====================
+                    // KONDISI 2
+                    // LEBIH DARI 1 FIELD KOSONG
+                    // =====================
+
+                    if (missingFields.length > 1) {
+
+                        showToast(
+                            `Silakan lengkapi terlebih dahulu: ${missingFields.join(", ")}`,
+                            true
+                        );
+
+                        return;
+                    };
+
+                    const payload = {
                         tanggal_transaksi:
-                            document.querySelector(
-                                '[name="tanggal_transaksi"]'
-                            ).value,
+                            tanggal,
 
                         transaction_type:
                             kategori,
@@ -851,35 +952,23 @@ document.addEventListener(
                             kategori,
 
                         category_id:
-                            parseInt(
-                                document.getElementById(
-                                    "subcategory"
-                                ).value
-                            ),
+                            parseInt(subkategori),
 
                         tujuan_transaksi:
-                            document.querySelector(
-                                '[name="tujuan_transaksi"]'
-                            ).value,
+                            tujuan,
 
                         payment_method:
-                            document.getElementById(
-                                "payment-method"
-                            ).value,
+                            metode,
 
                         amount:
-                            parseFloat(
-                                document.querySelector(
-                                    '[name="amount"]'
-                                ).value
-                            ),
+                            parseFloat(nominal),
 
                         keterangan:
                             document.querySelector(
                                 '[name="keterangan"]'
                             ).value
                     };
-
+                    
                     console.log(
                         "CREATE PAYLOAD",
                         payload
@@ -917,16 +1006,35 @@ document.addEventListener(
                         // reload tabel
                         await loadTransactions();
 
-                        alert(
+                        showToast(
                             "Transaksi berhasil ditambahkan"
                         );
 
                     } else {
+                    let errorMessage =
+                        result.message ||
+                        "Terjadi kesalahan.";
 
-                        alert(
-                            result.detail ||
-                            "Gagal menyimpan transaksi"
-                        );
+                    if (Array.isArray(result.detail)) {
+
+                        errorMessage =
+                            result.detail
+                                .map(
+                                    err => err.msg
+                                )
+                                .join(", ");
+
+                    } else if (result.detail) {
+
+                        errorMessage =
+                            result.detail;
+
+                    }
+
+                    showToast(
+                        errorMessage,
+                        "error"
+                    );
 
                     }
 
@@ -1328,5 +1436,48 @@ async function loadTransactions() {
 
     renderTransactionTable(
         transactions
+    );
+}
+
+function showToast(
+    message,
+    isError = false
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+    const text =
+        document.getElementById(
+            "toast-message"
+        );
+
+    text.textContent = message;
+
+    toast.classList.remove(
+        "error"
+    );
+
+    if(isError){
+        toast.classList.add(
+            "error"
+        );
+    }
+
+    toast.classList.add(
+        "show"
+    );
+
+    setTimeout(
+        () => {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        },
+        2500
     );
 }

@@ -51,14 +51,35 @@
 
 
 /* =========================
-   TOP SECTION
+   TRANSACTION LAYOUT
 ========================= */
 
-.transaction-top{
-    display: grid;
-    grid-template-columns: repeat(2,minmax(0,1fr));
-    gap: 24px;
+.transaction-layout{
+    display:grid;
+    grid-template-columns:270px 1fr;
+    gap:24px;
+    align-items:start;
+    margin-top: 15px; ;
 }
+
+.transaction-sidebar{
+    position:sticky;
+    top:24px;
+
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+
+    max-height:calc(100vh - 48px);
+
+    overflow-y:auto;
+}
+
+.transaction-content{
+    min-width:0;
+}
+
+
 
 
 /* =========================
@@ -103,6 +124,8 @@
     flex-direction: column;
     gap: 16px;
 }
+
+
 
 .form-group{
     display: flex;
@@ -277,6 +300,10 @@
 /* =========================
    TABLE
 ========================= */
+.table-wrapper{
+    width:100%;
+    overflow-x:auto;
+}
 
 .transaction-table{
     width: 100%;
@@ -979,3 +1006,39 @@
     border-radius: 10px;
     cursor: pointer;
 }
+
+/* =========================
+   TOAST NOTIFICATION
+========================= */
+#toast {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+
+    background: #22c55e;
+    color: white;
+
+    padding: 14px 20px;
+    border-radius: 12px;
+
+    font-weight: 600;
+
+    opacity: 0;
+    transform: translateY(-20px);
+
+    transition: all .3s ease;
+
+    z-index: 9999;
+
+    pointer-events: none;
+}
+
+#toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#toast.error {
+    background: #ef4444;
+}
+
