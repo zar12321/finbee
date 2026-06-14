@@ -303,7 +303,6 @@ a{
 }
 
 .profile-dropdown{
-    font-family: "Arial";
     display:none;
 
     position:absolute;
@@ -367,6 +366,8 @@ a{
 
 
 .dropdown-logout-link{
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
 
     display:flex;
 
