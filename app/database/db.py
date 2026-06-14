@@ -593,7 +593,7 @@ def login_user_by_identifier(
         """),
         {
             "login_identifier":
-                login_identifier.strip().lower()
+                login_identifier
         }
     )
 
