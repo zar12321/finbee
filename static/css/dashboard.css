@@ -437,6 +437,18 @@
     );
 }
 
+.hero-title{
+
+    font-size:2rem;
+
+    max-width:850px;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+
+}
+
 .hero-subtitle{
     color:#F6C324;
 

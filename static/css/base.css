@@ -149,12 +149,10 @@ a{
 }
 
 
-.navbar-center{
-
-    display:flex;
-    align-items:center;
-    gap:14px;
-
+.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-55%);
 }
 
 
@@ -188,6 +186,8 @@ a{
     display:flex;
     align-items:center;
     gap:18px;
+    justify-content: flex-end;
+    width: 280px;
 
 }
 
@@ -262,6 +262,9 @@ a{
 
     display:flex;
     flex-direction:column;
+    overflow: hidden;
+    max-width: 160px;
+    min-width: 80px;
 
 }
 
@@ -272,6 +275,10 @@ a{
     font-weight:700;
 
     color:#111827;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
 }
 
@@ -500,7 +507,24 @@ a{
     cursor:pointer;
 
     font-weight:600;
+
+    transition: all 0.25s ease;
 }
+
+.profile-save-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 20px rgba(
+            11,
+            31,
+            77,
+            0.25
+        );
+
+}
+
 
 .dropdown-profile-btn{
 
@@ -704,7 +728,25 @@ a{
     border-radius:10px;
 
     cursor:pointer;
+
+    transition: all 0.25s ease;
 }
+
+.profile-cancel-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 20px rgba(
+            11,
+            31,
+            77,
+            0.25
+        );
+
+}
+
+
 
 .profile-delete-btn{
 
