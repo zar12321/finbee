@@ -21,7 +21,3 @@ def get_current_user(request: Request):
         "login_type": request.session.get("login_type")
     }
 
-
-def get_current_user_id(request: Request):
-
-    return get_current_user(request)["user_id"]

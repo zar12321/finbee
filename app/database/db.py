@@ -241,29 +241,6 @@ def delete_transaction(
 
 
 # =====================================================
-# DELETE ALL TRANSACTIONS
-# =====================================================
-
-def delete_all_transactions(
-    db: Session,
-    user_id: int
-):
-
-    result = db.execute(
-        text("""
-            DELETE FROM transactions
-            WHERE user_id = :user_id
-        """),
-        {
-            "user_id": user_id
-        }
-    )
-
-    db.commit()
-
-    return result.rowcount
-
-# =====================================================
 # GET TRANSACTIONS BY USER ID
 # =====================================================
 
