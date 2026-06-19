@@ -11,7 +11,8 @@ from core.ai_model import (
 )
 
 from app.repositories.chatbot_repository import (
-    save_chat_history
+    save_chat_history, 
+    get_recent_chat_context
 )
 
 from app.services.rag_services import (
@@ -108,6 +109,30 @@ class ChatbotService:
         try:
 
             # ==================================
+            # BUILD RAG CONTEXT
+            # ==================================
+            print("STEP 2")
+            context = (
+                RAGService.build_financial_context(
+                    db=db,
+                    user_id=user_id
+                )
+            )
+
+            chat_history = get_recent_chat_context(
+                db=db, 
+                user_id=user_id, 
+                limit=10
+            )
+
+            history_text = "\n".join(
+                [
+                    f"{chat['role']}: {chat['message']}"
+                    for chat in chat_history
+                ]
+            )
+
+            # ==================================
             # SAVE USER MESSAGE
             # ==================================
             print("STEP 1")
@@ -121,26 +146,38 @@ class ChatbotService:
             )
 
             # ==================================
-            # BUILD RAG CONTEXT
-            # ==================================
-            print("STEP 2")
-            context = (
-                RAGService.build_financial_context(
-                    db=db,
-                    user_id=user_id
-                )
-            )
-
-            # ==================================
             # FINAL PROMPT
             # ==================================
 
             final_prompt = f"""
-                {context}
+            ==================================================
+            DATA FINANSIAL USER
+            ==================================================
 
-                PERTANYAAN USER:
-                {message}
-                """
+            {context}
+
+            ==================================================
+            RIWAYAT CHAT TERAKHIR
+            ==================================================
+
+            {history_text}
+
+            ==================================================
+            PESAN USER SAAT INI
+            ==================================================
+
+            {message}
+
+            ==================================================
+            INSTRUKSI
+            ==================================================
+
+            - Gunakan data finansial jika pertanyaan terkait keuangan.
+            - Gunakan riwayat chat untuk memahami konteks percakapan.
+            - Jika user melakukan follow-up dari chat sebelumnya,
+            jangan menganggap itu topik baru.
+            - Jawab secara santai dan natural.
+            """
 
             # ==================================
             # CALL MODEL
@@ -150,10 +187,33 @@ class ChatbotService:
             print("STEP 3")
 
             final_prompt = f"""
+            ==================================================
+            DATA FINANSIAL USER
+            ==================================================
+
             {context}
 
-            PERTANYAAN USER:
+            ==================================================
+            RIWAYAT CHAT TERAKHIR
+            ==================================================
+
+            {history_text}
+
+            ==================================================
+            PESAN USER SAAT INI
+            ==================================================
+
             {message}
+
+            ==================================================
+            INSTRUKSI
+            ==================================================
+
+            - Gunakan data finansial jika pertanyaan terkait keuangan.
+            - Gunakan riwayat chat untuk memahami konteks percakapan.
+            - Jika user melakukan follow-up dari chat sebelumnya,
+            jangan menganggap itu topik baru.
+            - Jawab secara santai dan natural.
             """
 
             print("STEP 4")
