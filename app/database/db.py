@@ -1034,7 +1034,7 @@ def filter_transactions(
 
         query += """
             AND date(t.tanggal_transaksi)
-                between current_date - interval '31 day'
+                between current_date - interval '30 day'
                 and current_date 
         """
 
