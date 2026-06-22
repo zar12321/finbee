@@ -2,7 +2,7 @@
 
 ### Smart Finance Busy Bee
 
-FinBee is an AI-powered personal finance management platform designed to help users manage their finances efficiently through transaction tracking, financial analytics, and intelligent financial assistance.
+FinBee is a personal finance management platform designed to help users manage their finances efficiently through transaction tracking, financial analytics, and intelligent financial assistance.
 
 ---
 
